@@ -70,6 +70,10 @@ export default class OrdersListState {
 
   async loadOrders() {
     this.loading = true;
+
+    const cl = client;
+    console.log(client);
+
     this.loading = false;
   }
 
