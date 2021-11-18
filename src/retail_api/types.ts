@@ -52,8 +52,27 @@ export class OrderItem {
   comment: string
 }
 
+export class Time {
+    from: string
+    to: string
+}
+
+export class Address {
+    countryIso: string
+    city: string
+    street: string
+    bulding: string
+    flat: string
+    text: string
+}
+
 export class OrderDelivery {
   code?: string
+  cost: number
+  netCost: number
+  date: string
+  time: Time
+  address: Address
 }
 
 export class Order {
