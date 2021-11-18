@@ -1,8 +1,18 @@
 declare namespace StylesMStylNamespace {
   export interface IStylesMStyl {
-    items: string;
+    backButtonWrapper: string;
+    body: string;
+    content: string;
+    head: string;
+    name: string;
+    orderInfo: string;
+    orderProp: string;
+    propName: string;
+    row: string;
     screen: string;
     screenWrapper: string;
+    table: string;
+    title: string;
   }
 }
 

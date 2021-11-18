@@ -22,3 +22,20 @@ coolScrollbar()
     background-color alpha($primary-grey, 80%)
     border-radius 20px
     border 3px solid transparent
+
+tableRow($min-height = 0) {
+    display grid
+    grid-auto-flow column
+    align-items center
+    column-gap 30px
+    grid-auto-columns minmax(0, 1fr)
+    min-height $min-height
+}
+
+multilineEllipsis($lines = 2) {
+    display -webkit-box
+    -webkit-line-clamp $lines
+    -webkit-box-orient vertical
+    overflow hidden
+    text-overflow ellipsis
+}

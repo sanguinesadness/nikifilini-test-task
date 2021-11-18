@@ -11,6 +11,7 @@ import { makeAutoObservable } from "mobx";
 type Status = null | Promise<any> | true;
 
 export class GlobalState {
+  initialized = false;
   data: {
     orderStatuses: CrmType[];
     deliveryTypes: CrmType[];
@@ -35,14 +36,11 @@ export class GlobalState {
     makeAutoObservable(this);
   }
 
-  get orderStatuses() {
-    if (this.status.orderStatuses === null) {
-    }
-    return this.data.orderStatuses;
+  setInitialized(val: boolean) {
+    this.initialized = val;
   }
 
   setOrderStatuses(statuses: CrmType[]) {
-    console.log(statuses);
     this.data.orderStatuses = statuses;
     this.status.orderStatuses = true;
   }
@@ -52,8 +50,8 @@ export class GlobalState {
     this.status.productStatuses = true;
   }
 
-  setDeliveryTypes(statuses: CrmType[]) {
-    this.data.deliveryTypes = statuses;
+  setDeliveryTypes(types: CrmType[]) {
+    this.data.deliveryTypes = types;
     this.status.deliveryTypes = true;
   }
 
@@ -67,6 +65,45 @@ export class GlobalState {
     if (this.status.deliveryTypes === null) {
     }
     return this.data.deliveryTypes;
+  }
+
+  get orderStatuses() {
+    if (this.status.orderStatuses === null) {
+    }
+    return this.data.orderStatuses;
+  }
+
+  async loadOrderStatuses() {
+      this.status.orderStatuses = client.query(ORDER_STATUSES_QUERY).toPromise();
+
+      const resp = await this.status.orderStatuses;
+
+      this.setOrderStatuses(resp.data.orderStatuses);
+  }
+
+  async loadProductStatuses() {
+      this.status.productStatuses = client.query(PRODUCT_STATUSES_QUERY).toPromise();
+
+      const resp = await this.status.productStatuses;
+
+      this.setProductStatuses(resp.data.productStatuses);
+  }
+
+  async loadDeliveryTypes() {
+      this.status.deliveryTypes = client.query(DELIVERY_TYPES_QUERY).toPromise();
+
+      const resp = await this.status.deliveryTypes;
+
+      this.setDeliveryTypes(resp.data.deliveryTypes);
+  }
+
+  initialize() {
+    if (this.initialized) return;
+    this.setInitialized(true);
+
+    this.loadDeliveryTypes();
+    this.loadOrderStatuses();
+    this.loadProductStatuses();
   }
 }
 

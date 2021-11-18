@@ -1,18 +1,12 @@
 @import '../../../../../common.styl'
 
 .row
-  min-height 64px
-
-  div
-    display flex
-    align-items center
-
+    tableRow(64px)
+    grid-template-columns 0.7fr repeat(4, 1fr) 
+    
     div
-      width 80%
-
-    &:last-child div
-      width 100%
+        width: 90%
 
 .orderNumber
-  font-weight 500
-  color $primary-dark
+    font-weight 500
+    color $primary-dark
